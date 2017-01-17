@@ -16,7 +16,7 @@ HuaweiPush.prototype.tokenRegistered = function (token) {
 // 透传消息
 HuaweiPush.prototype.pushMsgReceived = function (msg) {
     try {
-        msg.extras = JSON.parse(msg.extras)
+        msg.extras = JSON.parse(msg.extras);
         this.receiveRegisterResult = msg;
         cordova.fireDocumentEvent('huaweipush.pushMsgReceived', this.receiveRegisterResult);
     } catch(exception) {
@@ -25,7 +25,7 @@ HuaweiPush.prototype.pushMsgReceived = function (msg) {
 }
 HuaweiPush.prototype.notificationOpened = function (msg) {
     try {
-        msg.extras = JSON.parse(msg.extras)
+        msg.extras = JSON.parse(msg.extras);
         this.receiveRegisterResult = msg;
         cordova.fireDocumentEvent('huaweipush.notificationOpened', this.receiveRegisterResult);
     } catch(exception) {
