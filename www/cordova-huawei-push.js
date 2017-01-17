@@ -24,7 +24,8 @@ HuaweiPush.prototype.pushMsgReceived = function (msg) {
 }
 HuaweiPush.prototype.notificationOpened = function (msg) {
     try {
-        this.receiveRegisterResult = JSON.parse(msg);
+        msg.extras = JSON.parse(msg.extras)
+        this.receiveRegisterResult = msg;
         cordova.fireDocumentEvent('huaweipush.notificationOpened', this.receiveRegisterResult);
     } catch(exception) {
         console.log('HuaweiPush:notificationOpened ' + exception);
