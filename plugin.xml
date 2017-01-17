@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-huawei-push" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Cordova-Huawei-Push</name>
+    <description>Cordova Huawei Push Plugin</description>
+    <author>iflamed@gmail.com</author>
+    <license>MIT</license>
+    <keywords>cordova,huawei,push,huaweipush,hms</keywords>
+
+    <preference name="APPID" />
+    <preference name="PACKAGENAME" />
+
+    <dependency id="cordova-plugin-device" />
+    <js-module name="CordovaHuaweiPush" src="www/cordova-huawei-push.js">
+        <clobbers target="cordova.plugins.huaweipush" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="CordovaHuaweiPush">
+                <param name="android-package" value="com.iflamed.huaweipush.CordovaHuaweiPush" />
+            </feature>
+        </config-file>
+        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <meta-data
+            android:name="hwc-theme"
+            android:value="androidhwext:style/Theme.Emui.NoActionBar" />
+            <meta-data
+                android:name="com.huawei.hms.client.appid"
+                android:value="$APPID">
+            </meta-data>
+            <provider
+                android:name="com.huawei.hms.update.provider.UpdateProvider"
+                android:authorities="$PACKAGENAME.hms.update.provider"
+                android:exported="false"
+                android:grantUriPermissions="true" >
+            </provider>
+            <receiver android:name="com.iflamed.huaweipush.HuaweiPushReceiver" >
+                <intent-filter>
+                    <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                    <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                    <action android:name="com.huawei.android.push.intent.CLICK" />
+                    <action android:name="com.huawei.intent.action.PUSH_STATE" />
+                </intent-filter>
+                <meta-data
+                    android:name="CS_cloud_ablitity"
+                    android:value="successRateAnalytics">
+                </meta-data>
+            </receiver>
+            <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver" >
+                <intent-filter>
+                    <action android:name="com.huawei.intent.action.PUSH" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+        </config-file>
+        <framework src="src/android/huaweipush.gradle" custom="true" type="gradleReference" />
+        <resource-file src="aars/HMS-SDK-2.4.0.300.aar" target="aars/HMS-SDK-2.4.0.300.aar" />
+        <source-file src="src/android/CordovaHuaweiPush.java" target-dir="src/com/iflamed/huaweipush/" />
+        <source-file src="src/android/HuaweiPushReceiver.java" target-dir="src/com/iflamed/huaweipush/" />
+    </platform>
+</plugin>
