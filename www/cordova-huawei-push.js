@@ -16,7 +16,8 @@ HuaweiPush.prototype.tokenRegistered = function (token) {
 // 透传消息
 HuaweiPush.prototype.pushMsgReceived = function (msg) {
     try {
-        this.receiveRegisterResult = JSON.parse(msg);
+        msg.extras = JSON.parse(msg.extras)
+        this.receiveRegisterResult = msg;
         cordova.fireDocumentEvent('huaweipush.pushMsgReceived', this.receiveRegisterResult);
     } catch(exception) {
         console.log('HuaweiPush:pushMsgReceived ' + exception);
