@@ -185,7 +185,7 @@ OnUpdateListener {
         }
         try {
             JSONObject object = new JSONObject();
-            object.put("msg",msg);
+            object.put("extras",msg);
             String format = "window.cordova.plugins.huaweipush.pushMsgReceived(%s);";
             final String js = String.format(format, object.toString());
             activity.runOnUiThread(new Runnable() {
